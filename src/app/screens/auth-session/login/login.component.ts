@@ -32,7 +32,7 @@ export class LoginComponent {
     ).subscribe(response => {
       sessionStorage.setItem('token', response.access_token);
       console.log('router reached');
-      this._router.navigateByUrl('/');
+      this._router.navigateByUrl('/students');
     }
   );
   }
