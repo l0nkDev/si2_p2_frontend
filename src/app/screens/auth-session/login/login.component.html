@@ -1,0 +1,28 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card p-4 shadow"
+       style="width: 100%; max-width: 400px; background-color: #ffffff; border-radius: 12px;">
+
+    <h4 class="text-center text-primary mb-3">Iniciar sesión</h4>
+
+    <p class="text-center text-muted mb-4">
+      Ejemplo usuario: login / login
+    </p>
+
+    <div class="d-flex flex-column gap-1">
+      <label for="login" class="form-label mb-1">Login</label>
+      <input [(ngModel)]="login"
+             id="login"
+             maxlength="100"
+             class="form-control" />
+
+      <label for="password" class="form-label mb-1">Contraseña</label>
+      <input [(ngModel)]="password"
+             id="password"
+             type="password"
+             maxlength="50"
+             class="form-control" />
+
+      <button (click)="runlogin()" class="btn btn-primary mt-3 w-100 {{login.length > 0 && password.length > 0  ? '' : 'disabled' }} ">Ingresar</button>
+    </div>
+  </div>
+</div>

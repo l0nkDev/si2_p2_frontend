@@ -1,0 +1,40 @@
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-end mb-3">
+    <button (click)="CreateNewEntry()" class="btn btn-success">
+      ➕ Nuevo Estudiante
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered text-center align-middle small"
+           style="border-collapse: separate; border-spacing: 0px;">
+      <thead style="background-color: #e3f2fd;">
+        <tr>
+          <th><b>Nombre(s)</b></th>
+          <th><b>Apellido(s)</b></th>
+          <th><b>Cédula de Identidad</b></th>
+          <th><b>Teléfono</b></th>
+          <th><b>Correo Electrónico</b></th>
+          <th><b>RUDE</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (student of students; track $index) {
+          <students_item
+            (entryDeletedEvent)="OnChildButtonClick()"
+            style="display: contents;"
+            [id]="student.id"
+            [name]="student.name"
+            [lname]="student.lname"
+            [ci]="student.ci"
+            [phone]="student.phone"
+            [email]="student.email"
+            [rude]="student.rude">
+          </students_item>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

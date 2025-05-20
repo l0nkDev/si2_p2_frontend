@@ -1,0 +1,38 @@
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-end mb-3">
+    <button (click)="CreateNewEntry()" class="btn btn-success">
+      ➕ Nuevo Docente
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered text-center align-middle small"
+           style="border-collapse: separate; border-spacing: 0px;">
+      <thead style="background-color: #e3f2fd;">
+        <tr>
+          <th><b>Nombre(s)</b></th>
+          <th><b>Apellido(s)</b></th>
+          <th><b>Cédula de Identidad</b></th>
+          <th><b>Teléfono</b></th>
+          <th><b>Correo Electrónico</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (teacher of teachers; track $index) {
+          <teachers_item
+            (entryDeletedEvent)="OnChildButtonClick()"
+            style="display: contents;"
+            [id]="teacher.id"
+            [name]="teacher.name"
+            [lname]="teacher.lname"
+            [ci]="teacher.ci"
+            [phone]="teacher.phone"
+            [email]="teacher.email">
+          </teachers_item>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>
