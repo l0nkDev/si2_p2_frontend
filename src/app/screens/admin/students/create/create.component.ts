@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpClient, HttpXhrBackend} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpXhrBackend} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 export interface Response {
@@ -18,6 +18,7 @@ export class CreateStudentComponent {
   private http = new HttpClient(new HttpXhrBackend({
     build: () => new XMLHttpRequest()
   }));
+  headers = new HttpHeaders();
   name = '';
   lname = '';
   ci = 0;
@@ -27,6 +28,7 @@ export class CreateStudentComponent {
 
 
   runcreate() {
+    this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     this.http.post<Response>(
       "http://l0nk5erver.duckdns.org:5000/api/students/",
       {
@@ -37,9 +39,8 @@ export class CreateStudentComponent {
         "email": this.email,
         "rude": this.rude
       }
-    ).subscribe(response => {
-      sessionStorage.setItem('token', response.access_token);
-      console.log('router reached');
+        ,{headers: this.headers})
+      .subscribe(response => {
       this._router.navigateByUrl('/students');
     }
   );
