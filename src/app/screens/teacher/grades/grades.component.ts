@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpXhrBackend } from '@angular/common/http';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { API_ENDPOINT } from '../../../constants';
 import { Assistance } from '../../../interfaces/assistance';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'assistance',
-  templateUrl: './assistance.component.html',
-  imports: [FormsModule, RouterLink],
+  templateUrl: './grades.component.html',
+  imports: [FormsModule],
 })
 
-export class AssistanceComponent implements OnInit{
+export class GradesComponent implements OnInit{
 id: number = 0;
 
   constructor(private _router: Router, private route: ActivatedRoute) {

@@ -6,9 +6,9 @@
       @for (class of classes; track $index) {
         <li class="list-group-item" style="display: flex; justify-content: space-between;">{{class.stage + class.grade + class.parallel}}
           <div class="btn-group">
-            <a href="#" class="btn btn-primary">Asistencia</a>
-            <a href="#" class="btn btn-primary">Notas</a>
-            <a href="#" class="btn btn-primary">Participaciones</a>
+            <a routerLink="{{ '/teacher/' + this.id + '/assistance' }}" class="btn btn-primary">Asistencia</a>
+            <a routerLink="{{ '/teacher/' + this.id + '/grades' }}" class="btn btn-primary">Notas</a>
+            <a routerLink="{{ '/teacher/' + this.id + '/participation' }}" class="btn btn-primary">Participaciones</a>
           </div>
         </li>
       }

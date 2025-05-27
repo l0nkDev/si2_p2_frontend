@@ -7,6 +7,9 @@ import { CreateTeacherComponent } from './screens/admin/teachers/create/create.c
 import { UsersComponent } from './screens/admin/users/users.component';
 import { SubjectsComponent } from './screens/teacher/subjects/subjects.component';
 import { AssistanceComponent } from './screens/teacher/assistance/assistance.component';
+import { GradesComponent } from './screens/teacher/grades/grades.component';
+import { ParticipationComponent } from './screens/teacher/participation/participation.component';
+import { StudentComponent } from './screens/public/student/student.component';
 
 export const routes: Routes = [
   {
@@ -45,8 +48,23 @@ export const routes: Routes = [
     component: AssistanceComponent
   },
   {
+    path: 'teacher/:id/grades',
+    title: 'Notas',
+    component: GradesComponent
+  },
+  {
+    path: 'teacher/:id/participation',
+    title: 'Participación',
+    component: ParticipationComponent
+  },
+  {
     path: 'teacher',
     title: 'Materias',
     component: SubjectsComponent
+  },
+  {
+    path: 'student/:id',
+    title: 'Estudiante',
+    component: StudentComponent
   }
 ];

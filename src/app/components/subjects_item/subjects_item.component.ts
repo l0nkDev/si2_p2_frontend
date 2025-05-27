@@ -3,11 +3,12 @@ import { HttpClient, HttpXhrBackend, HttpHeaders } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { API_ENDPOINT } from '../../constants';
 import { ClassSimple } from '../../interfaces/classsimple';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'subjects_item',
   templateUrl: './subjects_item.component.html',
-  imports: [FormsModule]
+  imports: [FormsModule, RouterLink]
 })
 export class SubjectsItemComponent {
   isEditable = 'disabled';
