@@ -1,34 +1,38 @@
-import { Component, Input, Output, numberAttribute, EventEmitter } from '@angular/core';
+import { Component, Input, Output, numberAttribute, EventEmitter, OnInit } from '@angular/core';
 import { HttpClient, HttpXhrBackend, HttpHeaders } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { API_ENDPOINT } from '../../constants';
 
 @Component({
-  selector: 'students_item',
-  templateUrl: './students_item.component.html',
+  selector: 'users_item',
+  templateUrl: './users_item.component.html',
   imports: [FormsModule]
 })
-export class StudentsItemComponent {
+export class UsersItemComponent {
   isEditable = 'disabled';
   buttonStatus = 'disabled'
   token: string | null = '';
   headers = new HttpHeaders();
   @Input({transform: numberAttribute}) id: number = 0;
-  @Input() name: string = '';
-  @Input() lname: string = '';
-  @Input({transform: numberAttribute}) ci: number = 0;
-  @Input({transform: numberAttribute}) phone: number = 0;
-  @Input() email: string = '';
-  @Input({transform: numberAttribute}) rude: number = 0;
+  @Input() login: string = '';
+  @Input() password: string = '';
+  @Input() role: string = '';
   @Output() entryDeletedEvent = new EventEmitter<string>()
 
   private http = new HttpClient(new HttpXhrBackend({
     build: () => new XMLHttpRequest()
   }));
 
+  ngOnInit() {
+    if (this.role == 'A') this.role = 'Admin';
+    if (this.role == 'T') this.role = 'Docente';
+    if (this.role == 'S') this.role = 'Estudiante';
+    if (this.role == 'O') this.role = 'Dueño';
+  }
+
   OnEntryButtonClick() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    this.http.delete<Response[]>(API_ENDPOINT + "admin/students/" + this.id + "/", {headers: this.headers})
+    this.http.delete(API_ENDPOINT + "admin/users/" + this.id + "/", {headers: this.headers})
     .subscribe(_ => {
       this.entryDeletedEvent.emit("")
       console.log("emitido")
@@ -40,15 +44,9 @@ export class StudentsItemComponent {
     if (this.isEditable === 'disabled') this.isEditable = '';
     else {
       this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-      this.http.put<Response[]>(API_ENDPOINT + "admin/students/" + this.id + "/",
+      this.http.put(API_ENDPOINT + "admin/users/" + this.id + "/",
         {
           "id": this.id,
-          "name": this.name,
-          "lname": this.lname,
-          "ci": this.ci,
-          "phone": this.phone,
-          "email": this.email,
-          "rude": this.rude,
         }
         ,{headers: this.headers})
       .subscribe(_ => {

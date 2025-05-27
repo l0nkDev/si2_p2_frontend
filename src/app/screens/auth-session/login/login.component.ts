@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClient, HttpXhrBackend} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { API_ENDPOINT } from '../../../constants';
 
 export interface Response {
   access_token: string
@@ -24,7 +25,7 @@ export class LoginComponent {
 
   runlogin() {
     this.http.post<Response>(
-      "http://l0nk5erver.duckdns.org:5000/api/auth/login/",
+      API_ENDPOINT + "auth/login/",
       {
         "login": this.login,
         "password": this.password
@@ -32,7 +33,7 @@ export class LoginComponent {
     ).subscribe(response => {
       sessionStorage.setItem('token', response.access_token);
       console.log('router reached');
-      this._router.navigateByUrl('/students');
+      this._router.navigateByUrl('admin/students');
     }
   );
   }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpXhrBackend } from '@angular/common/http';
 import { TeachersItemComponent } from '../../../components/teachers_item/teachers_item.component';
 import { Router } from '@angular/router';
 import { Teacher } from '../../../interfaces/teacher';
+import { API_ENDPOINT } from '../../../constants';
 
 @Component({
   selector: 'teachers',
@@ -22,7 +23,7 @@ export class TeachersComponent implements OnInit{
 
   fetchContent() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    this.http.get<Teacher[]>("http://l0nk5erver.duckdns.org:5000/api/teachers/", {headers: this.headers})
+    this.http.get<Teacher[]>(API_ENDPOINT + "admin/teachers/", {headers: this.headers})
     .subscribe(response => {
       this.teachers = response;
     })
@@ -31,7 +32,7 @@ export class TeachersComponent implements OnInit{
   OnChildButtonClick() { console.log("recibido"); this.fetchContent()}
 
   CreateNewEntry() {
-    this._router.navigateByUrl('/teachers/create')
+    this._router.navigateByUrl('admin/teachers/create')
   }
 
 }

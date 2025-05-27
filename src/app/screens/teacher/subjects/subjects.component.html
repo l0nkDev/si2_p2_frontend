@@ -1,0 +1,16 @@
+<div style="height: 32px;"></div>
+<h4 class="text-center text-primary mb-3">Materias</h4>
+<div style="height: 32px;"></div>
+<div style="display: flex; justify-content: center; width: 100%;">
+  @for (subject of subjects; track $index) {
+    <subjects_item
+      (entryDeletedEvent)="OnChildButtonClick()"
+      style="display: contents;"
+      [id]="subject.id"
+      [title]="subject.title"
+      [teacher]="subject.teacher"
+      [classes]="subject.classes">
+    </subjects_item>
+}
+</div>
+

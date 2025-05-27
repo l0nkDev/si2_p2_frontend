@@ -1,0 +1,17 @@
+<tr>
+  <td><input [(ngModel)]="login" class="form-control form-control-sm"
+             [disabled]="isEditable !== ''" style="min-width: 120px;"></td>
+  <td><input [(ngModel)]="password" class="form-control form-control-sm"
+             [disabled]="isEditable !== ''" style="min-width: 120px;"></td>
+  <td><input [(ngModel)]="role" class="form-control form-control-sm"
+             disabled style="min-width: 150px;"></td>
+
+  <td class="d-flex gap-1 justify-content-center">
+    <button (click)="OnEditButtonClick()" class="btn btn-outline-primary btn-sm">
+      {{ isEditable === '' ? '💾' : '✏️' }}
+    </button>
+    <button (click)="OnEntryButtonClick()" class="btn btn-outline-danger btn-sm">
+      🗑️
+    </button>
+  </td>
+</tr>

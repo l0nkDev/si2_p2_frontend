@@ -1,6 +1,7 @@
 import { Component, Input, Output, numberAttribute, EventEmitter } from '@angular/core';
 import { HttpClient, HttpXhrBackend, HttpHeaders } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import { API_ENDPOINT } from '../../constants';
 
 @Component({
   selector: 'teachers_item',
@@ -26,7 +27,7 @@ export class TeachersItemComponent {
 
   OnEntryButtonClick() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    this.http.delete("http://l0nk5erver.duckdns.org:5000/api/teachers/" + this.id + "/", {headers: this.headers})
+    this.http.delete(API_ENDPOINT + "admin/teachers/" + this.id + "/", {headers: this.headers})
     .subscribe(_ => {
       this.entryDeletedEvent.emit("")
       console.log("emitido")
@@ -38,7 +39,7 @@ export class TeachersItemComponent {
     if (this.isEditable === 'disabled') this.isEditable = '';
     else {
       this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-      this.http.put("http://l0nk5erver.duckdns.org:5000/api/teachers/" + this.id + "/",
+      this.http.put(API_ENDPOINT + "admin/teachers/" + this.id + "/",
         {
           "id": this.id,
           "name": this.name,

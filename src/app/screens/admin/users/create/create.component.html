@@ -1,0 +1,42 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card p-4 shadow"
+       style="width: 100%; max-width: 400px; background-color: #ffffff; border-radius: 12px;">
+
+    <h4 class="text-center text-primary mb-3">Nuevo Docente</h4>
+
+    <div class="d-flex flex-column gap-1">
+      <label for="name" class="form-label mb-1">Nombre(s)</label>
+      <input [(ngModel)]="name"
+             id="name"
+             maxlength="100"
+             class="form-control" />
+
+      <label for="lname" class="form-label mb-1">Apellido(s)</label>
+      <input [(ngModel)]="lname"
+             id="lname"
+             maxlength="100"
+             class="form-control" />
+
+      <label for="ci" class="form-label mb-1">Cédula de Identidad</label>
+      <input [(ngModel)]="ci"
+             id="ci"
+             type="number"
+             class="form-control" />
+
+      <label for="phone" class="form-label mb-1">Teléfono</label>
+      <input [(ngModel)]="phone"
+             id="phone"
+             type="number"
+             class="form-control" />
+
+      <label for="email" class="form-label mb-1">Correo electrónico</label>
+      <input [(ngModel)]="email"
+             id="email"
+             maxlength="100"
+             type="email"
+             class="form-control" />
+
+      <button (click)="runcreate()" class="btn btn-primary mt-3 w-100">Crear</button>
+    </div>
+  </div>
+</div>

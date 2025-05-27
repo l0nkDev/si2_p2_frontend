@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpXhrBackend } from '@angular/common/http';
-import { StudentsItemComponent } from '../../../components/students_item/students_item.component';
-import { Student } from '../../../interfaces/student';
 import { Router } from '@angular/router';
 import { API_ENDPOINT } from '../../../constants';
+import { Subject } from '../../../interfaces/subject';
+import { SubjectsItemComponent } from '../../../components/subjects_item/subjects_item.component';
 
 @Component({
-  selector: 'students',
-  templateUrl: './students.component.html',
-  imports: [StudentsItemComponent],
+  selector: 'teachers',
+  templateUrl: './subjects.component.html',
+  imports: [SubjectsItemComponent],
 })
 
-export class StudentsComponent implements OnInit{
+export class SubjectsComponent implements OnInit{
   constructor(private _router: Router) { }
-  students: Student[] = [];
+  subjects: Subject[] = [];
   headers = new HttpHeaders;
   private http = new HttpClient(new HttpXhrBackend({
     build: () => new XMLHttpRequest()
@@ -23,16 +23,17 @@ export class StudentsComponent implements OnInit{
 
   fetchContent() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    this.http.get<Student[]>(API_ENDPOINT + "admin/students/", {headers: this.headers})
+    this.http.get<Subject[]>(API_ENDPOINT + "teacher/subjects/", {headers: this.headers})
     .subscribe(response => {
-      this.students = response;
+      this.subjects = response;
+      console.log(this.subjects);
     })
   }
 
   OnChildButtonClick() { console.log("recibido"); this.fetchContent()}
 
   CreateNewEntry() {
-    this._router.navigateByUrl('admin/students/create')
+    this._router.navigateByUrl('admin/teachers/create')
   }
 
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClient, HttpHeaders, HttpXhrBackend} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { API_ENDPOINT } from '../../../../constants';
 
 export interface Response {
   access_token: string
@@ -30,7 +31,7 @@ export class CreateStudentComponent {
   runcreate() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     this.http.post<Response>(
-      "http://l0nk5erver.duckdns.org:5000/api/students/",
+      API_ENDPOINT + "admin/students/",
       {
         "name": this.name,
         "lname": this.lname,
@@ -41,7 +42,7 @@ export class CreateStudentComponent {
       }
         ,{headers: this.headers})
       .subscribe(response => {
-      this._router.navigateByUrl('/students');
+      this._router.navigateByUrl('admin/students');
     }
   );
   }
