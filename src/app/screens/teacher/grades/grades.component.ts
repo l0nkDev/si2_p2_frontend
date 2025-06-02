@@ -53,10 +53,6 @@ class: number = 0;
     })
   }
 
-  updateTitle(title: string) {
-    console.log(title)
-  }
-
   findValue(target: ScoreTarget, entry: ScoreResponse): number {
     for (var score of entry.scores) {
       if (target.id == score.target) {
@@ -70,9 +66,9 @@ class: number = 0;
     var sum = 0;
     for (var e of entry.scores) { if (semester == this.getSemester(e)) { sum += e.score} }
     if (sum == 0) return 0;
-    if (semester == 1) { return sum/this.sem1t.length }
-    if (semester == 1) { return sum/this.sem2t.length }
-    return sum/this.sem3t.length
+    if (semester == 1) { return (Math.round(((sum/this.sem1t.length) + Number.EPSILON) * 100) / 100) }
+    if (semester == 1) { return (Math.round(((sum/this.sem2t.length) + Number.EPSILON) * 100) / 100) }
+    return (Math.round(((sum/this.sem3t.length) + Number.EPSILON) * 100) / 100)
   }
 
   getSemester(s: Score): number {
@@ -80,6 +76,34 @@ class: number = 0;
     for (var e of this.sem2t) { if (e.id == s.target) {return 2} }
     for (var e of this.sem3t) { if (e.id == s.target) {return 3} }
     return 0;
+  }
+
+  createTarget(trimester: number) {
+    this.http.post<ScoreResponse[]>(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/scores/targets/",
+      {"title": "-", "trimester": trimester},
+      {headers: this.headers})
+    .subscribe(response => { this.fetchContent(); })
+  }
+
+  updateTarget(title: string, id: number) {
+    this.http.put<ScoreResponse[]>(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/scores/targets/",
+      {"title": title, "id": id},
+      {headers: this.headers})
+    .subscribe(response => { this.fetchContent(); })
+  }
+
+  deleteTarget(id: number) {
+    this.http.patch<ScoreResponse[]>(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/scores/targets/",
+      {"id": id},
+      {headers: this.headers})
+    .subscribe(response => { this.fetchContent(); })
+  }
+
+  updateScore(student: number, target: number, score: string) {
+    this.http.post<ScoreResponse[]>(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/scores/",
+      {"student": student, "target": target, "score": Number(score)},
+      {headers: this.headers})
+    .subscribe(response => { this.fetchContent(); })
   }
 
 }

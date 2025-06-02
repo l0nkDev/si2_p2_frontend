@@ -19,6 +19,7 @@ import { StudentAssistanceComponent } from './screens/student/assistance/assista
 import { CreateParticipationComponent } from './screens/teacher/participation/create/create.component';
 import { EditParticipationComponent } from './screens/teacher/participation/edit/edit.component';
 import { StudentParticipationComponent } from './screens/student/participation/participation.component';
+import { StudentGradesComponent } from './screens/student/grades/grades.component';
 
 export const routes: Routes = [
   {
@@ -87,11 +88,6 @@ export const routes: Routes = [
     component: StudentComponent
   },
   {
-    path: 'student',
-    title: 'Materias',
-    component: StudentSubjectsComponent
-  },
-  {
     path: 'student/subjects/:id/classes/:class/assistance',
     title: 'Asistencias',
     component: StudentAssistanceComponent
@@ -100,6 +96,16 @@ export const routes: Routes = [
     path: 'student/subjects/:id/classes/:class/participation',
     title: 'Participación',
     component: StudentParticipationComponent
+  },
+  {
+    path: 'student/subjects/:id/classes/:class/grades',
+    title: 'Notas',
+    component: StudentGradesComponent
+  },
+  {
+    path: 'student',
+    title: 'Materias',
+    component: StudentSubjectsComponent
   },
   {
     path: 'admin/subjectareas/:id/subjects/create',
