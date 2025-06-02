@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { API_ENDPOINT } from '../../../constants';
 import { Assistance } from '../../../interfaces/assistance';
 import { FormsModule } from '@angular/forms';
+import { Score, ScoreResponse, ScoreTarget } from '../../../interfaces/score';
 
 @Component({
   selector: 'assistance',
@@ -13,12 +14,18 @@ import { FormsModule } from '@angular/forms';
 
 export class GradesComponent implements OnInit{
 id: number = 0;
+class: number = 0;
 
   constructor(private _router: Router, private route: ActivatedRoute) {
-    this.route.params.subscribe( params =>  { this.id = params["id"]; this.fetchContent() });
+    this.route.params.subscribe( params =>  { this.id = params["id"]; this.class = params["class"]; this.fetchContent() });
   }
 
-  assistances: Assistance[] = [];
+  entries: ScoreResponse[] = [];
+  targets: ScoreTarget[] = [];
+  sem1t: ScoreTarget[] = [];
+  sem2t: ScoreTarget[] = [];
+  sem3t: ScoreTarget[] = [];
+
   headers = new HttpHeaders;
   private http = new HttpClient(new HttpXhrBackend({
     build: () => new XMLHttpRequest()
@@ -28,17 +35,51 @@ id: number = 0;
 
   fetchContent() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    this.http.get<Assistance[]>(API_ENDPOINT + "teacher/assistance/", {headers: this.headers})
+    this.http.get<ScoreResponse[]>(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/scores/", {headers: this.headers})
     .subscribe(response => {
-      this.assistances = response;
-      console.log(this.assistances);
+      this.entries = response;
+    })
+    this.http.get<ScoreTarget[]>(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/scores/targets/", {headers: this.headers})
+    .subscribe(response => {
+      this.targets = response;
+      this.sem1t = []
+      this.sem2t = []
+      this.sem3t = []
+      for (var t of this.targets) {
+        if (t.trimester == 1) this.sem1t.push(t)
+        if (t.trimester == 2) this.sem2t.push(t)
+        if (t.trimester == 3) this.sem3t.push(t)
+      }
     })
   }
 
-  OnChildButtonClick() { console.log("recibido"); this.fetchContent()}
+  updateTitle(title: string) {
+    console.log(title)
+  }
 
-  CreateNewEntry() {
-    this._router.navigateByUrl('admin/teachers/create')
+  findValue(target: ScoreTarget, entry: ScoreResponse): number {
+    for (var score of entry.scores) {
+      if (target.id == score.target) {
+        return score.score
+      }
+    }
+    return 0
+  }
+
+  getAverage(semester: number, entry: ScoreResponse): number {
+    var sum = 0;
+    for (var e of entry.scores) { if (semester == this.getSemester(e)) { sum += e.score} }
+    if (sum == 0) return 0;
+    if (semester == 1) { return sum/this.sem1t.length }
+    if (semester == 1) { return sum/this.sem2t.length }
+    return sum/this.sem3t.length
+  }
+
+  getSemester(s: Score): number {
+    for (var e of this.sem1t) { if (e.id == s.target) {return 1} }
+    for (var e of this.sem2t) { if (e.id == s.target) {return 2} }
+    for (var e of this.sem3t) { if (e.id == s.target) {return 3} }
+    return 0;
   }
 
 }

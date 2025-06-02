@@ -1,0 +1,20 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card p-4 shadow"
+       style="width: 100%; max-width: 400px; background-color: #ffffff; border-radius: 12px;">
+
+    <h4 class="text-center text-primary mb-3">Nueva materia para {{areaname}}</h4>
+
+    <div class="d-flex flex-column gap-1">
+      <label for="name" class="form-label mb-1">Título</label>
+      <input [(ngModel)]="name" id="name" maxlength="100" class="form-control" />
+      <label for="teacher" class="form-label mb-1">Docente</label>
+      <select [(ngModel)]="teacherid" id="teacher" class="form-select" aria-label="Default select example">
+        @for (teacher of teachers; track $index) {
+          <option [value]="teacher.id">{{teacher.lname + " " + teacher.name}}</option>
+        }
+      </select>
+
+      <button (click)="runcreate()" class="btn btn-primary mt-3 w-100">Crear</button>
+    </div>
+  </div>
+</div>

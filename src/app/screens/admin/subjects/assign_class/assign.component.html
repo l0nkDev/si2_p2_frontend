@@ -1,0 +1,18 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card p-4 shadow"
+       style="width: 100%; max-width: 400px; background-color: #ffffff; border-radius: 12px;">
+
+    <h4 class="text-center text-primary mb-3">Asignar curso a {{subjectname}}</h4>
+
+    <div class="d-flex flex-column gap-1">
+      <label for="class" class="form-label mb-1">Clase</label>
+      <select [(ngModel)]="classid" id="class" class="form-select" aria-label="Default select example">
+        @for (class of classes; track $index) {
+          <option [value]="class.id">{{class.stage + class.grade + class.parallel}}</option>
+        }
+      </select>
+
+      <button (click)="runcreate()" class="btn btn-primary mt-3 w-100">Asignar</button>
+    </div>
+  </div>
+</div>

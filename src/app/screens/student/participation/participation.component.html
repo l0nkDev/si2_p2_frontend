@@ -1,0 +1,34 @@
+<div style="height: 32px;"></div>
+<h4 class="text-center text-primary mb-3">Participación en clase</h4>
+<div style="height: 32px;"></div>
+<div style="display: flex; justify-content: center; width: 100%;">  <div class="table-responsive">
+  @if (participation != null) {
+    <table class="table table-hover table-bordered text-center align-middle small"
+           style="border-collapse: separate; border-spacing: 0px;">
+      <thead style="background-color: #e3f2fd;">
+        <tr>
+          <th colspan="3"><b>{{participation.rude + " | " + participation.lname + " " + participation.name}}</b></th>
+        </tr>
+        <tr>
+          <th><b>Nota</b></th>
+          <th><b>Fecha</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (participation of participation.participations; track $index) {
+          <tr>
+            <td><input [value]="formatdate(participation.date, 'dd-MM', 'en-US')" class="form-control form-control-sm"
+                      disabled style="min-width: 120px;"></td>
+            <td><input [value]="participation.description" class="form-control form-control-sm"
+                      disabled style="min-width: 120px;"></td>
+            <td><input [value]="participation.score" class="form-control form-control-sm"
+                      disabled style="min-width: 120px;"></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  </div>
+</div>
+

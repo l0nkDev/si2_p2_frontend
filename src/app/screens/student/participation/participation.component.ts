@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpXhrBackend } from '@angular/common/http';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { API_ENDPOINT } from '../../../constants';
-import { Assistance } from '../../../interfaces/assistance';
 import { FormsModule } from '@angular/forms';
 import { ParticipationEntry } from '../../../interfaces/participation';
 import { formatDate } from '@angular/common';
@@ -13,10 +12,10 @@ import { formatDate } from '@angular/common';
   imports: [FormsModule, RouterLink],
 })
 
-export class ParticipationComponent implements OnInit{
+export class StudentParticipationComponent implements OnInit{
   id: number = 0;
   class: number = 0;
-  participations: ParticipationEntry[] = [];
+  participation: ParticipationEntry | null = null;
 
   constructor(private _router: Router, private route: ActivatedRoute) {
     this.route.params.subscribe( params =>  { this.id = params["id"]; this.class = params["class"]; this.fetchContent() });
@@ -31,19 +30,14 @@ export class ParticipationComponent implements OnInit{
 
   fetchContent() {'student/subjects/<int:pk>/<int:_class>/participation/'
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    this.http.get<ParticipationEntry[]>(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/participation/", {headers: this.headers})
+    this.http.get<ParticipationEntry>(API_ENDPOINT + "student/subjects/" + this.id + "/" + this.class + "/participation/", {headers: this.headers})
     .subscribe(response => {
-      this.participations = response;
+      this.participation = response;
     })
   }
 
   formatdate(date:Date, format:string, locale:string) {
     return formatDate(date, format, locale)
-  }
-
-  deleteEntry(id: number) {
-    this.http.patch(API_ENDPOINT + "teacher/subjects/" + this.id + "/" + this.class + "/participation/", {"id": id}, {headers: this.headers})
-    .subscribe(_ => { this.fetchContent() })
   }
 }
 

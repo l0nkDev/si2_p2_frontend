@@ -1,40 +1,54 @@
-<div style="height: 32px;"></div>
-<h4 class="text-center text-primary mb-3">Control de asistencias</h4>
-<div style="height: 32px;"></div>
-<div style="display: flex; justify-content: center; width: 100%;">  <div class="table-responsive">
-    <table class="table table-hover table-bordered text-center align-middle small"
-           style="border-collapse: separate; border-spacing: 0px;">
-      <thead style="background-color: #e3f2fd;">
-        <tr>
-          <th><b>RUDE</b></th>
-          <th><b>Estudiante</b></th>
-          <th><b>Fecha</b></th>
-          <th><b>Estado</b></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (assistance of assistances; track $index) {
-          <tr>
-            <td><input [(ngModel)]="assistance.student.rude" class="form-control form-control-sm"
-                      disabled style="min-width: 120px;"></td>
-            <td><a routerLink="{{'/student/' + assistance.student.id }}" class="form-control form-control-sm" disabled style="min-width: 120px;">
-              {{assistance.student.name + " " + assistance.student.lname}}
-            </a></td>
-            <td><input [(ngModel)]="assistance.date" class="form-control form-control-sm"
-                      disabled style="min-width: 120px;"></td>
-            <td><input [(ngModel)]="assistance.status" class="form-control form-control-sm"
-                      disabled style="min-width: 120px;"></td>
-            <td class="d-flex gap-1 justify-content-center">
-              <button class="btn btn-outline-primary btn-sm">
-              </button>
-              <button  class="btn btn-outline-danger btn-sm">
-                🗑️
-              </button>
-            </td>
-          </tr>
+<div class="container mt-4">
+  <h4 class="text-center text-primary mb-3">Control de asistencias</h4>
+  <div class="d-flex justify-content-center mb-3">
+    <div style="width: 18rem; display: flex; flex-direction: row; justify-content: center;">
+    @if (todaysclass != null) {
+        @if (todaysclass.detail != null) {
+          <button (click)="startClass()" class="btn btn-success">
+            Iniciar clase
+          </button>
+        } @else {
+          <select [(ngModel)]="todaysclass.status" id="status" class="form-select" aria-label="Default select example" style="margin-left: 20px;">
+              <option value="S">Iniciada</option>
+              <option value="L">Tarde</option>
+              <option value="E">Terminada</option>
+          </select>
+          <button (click)="updateClass()" class="btn btn-success">
+            Guardar
+          </button>
         }
-      </tbody>
-    </table>
+      }
+    </div>
+  </div>
+  <div style="height: 32px;"></div>
+  <div style="display: flex; justify-content: center; width: 100%;">  <div class="table-responsive">
+      <table class="table table-hover table-bordered text-center align-middle small"
+            style="border-collapse: separate; border-spacing: 0px;">
+        <thead style="background-color: #e3f2fd;">
+          <tr>
+            <th><b>RUDE</b></th>
+            <th><b>Estudiante</b></th>
+            @for (date of dates; track $index) {
+            <th><b>{{formatdate(date.date, 'dd-MM', 'en_US')}}</b></th>
+            }
+
+          </tr>
+        </thead>
+        <tbody>
+          @for (assistance of assistances; track $index) {
+            <tr>
+              <td><div [(ngModel)]="assistance.rude" class="form-control form-control-sm" disabled style="min-width: 120px;">
+                {{assistance.rude}}
+              </div></td>
+              <td><a routerLink="{{'/student/' + assistance.id }}" class="form-control form-control-sm" disabled style="min-width: 120px;">
+                {{assistance.name + " " + assistance.lname}}
+              </a></td>
+              @for (date of dates; track $index) {
+                <td><assistance_item [assistances]="assistance" [date]="date.date" [session]="date.session.id"></assistance_item></td> }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-

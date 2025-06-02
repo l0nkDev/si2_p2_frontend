@@ -1,0 +1,20 @@
+<div style="height: 32px;"></div>
+<h4 class="text-center text-primary mb-3">Materias</h4>
+<div style="height: 32px;"></div>
+<div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+  @if (class != null) {
+  @for (subject of class.subjects; track $index) {
+  <div class="card p-4 shadow" style="width: 100%; max-width: 600px; background-color: #ffffff; border-radius: 12px;">
+    <div class="card-body">
+      <h5 class="card-title">{{subject.title}}</h5>
+    </div>
+      <div class="btn-group">
+        <a routerLink="{{ '/student/subjects/' + subject.id + '/classes/' + class.id + '/assistance' }}" class="btn btn-primary">Asistencia</a>
+        <a routerLink="{{ '/student/subjects/' + subject.id + '/classes/' + class.id + '/grades' }}" class="btn btn-primary">Notas</a>
+        <a routerLink="{{ '/student/subjects/' + subject.id + '/classes/' + class.id + '/participation' }}" class="btn btn-primary">Participaciones</a>
+      </div>
+  </div>
+}
+  }
+</div>
+

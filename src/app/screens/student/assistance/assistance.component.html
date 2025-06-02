@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <h4 class="text-center text-primary mb-3">Historial de asistencias</h4>
+  <div class="d-flex justify-content-center mb-3">
+    <div style="width: 18rem; display: flex; flex-direction: row; justify-content: center;">
+    @if (todaysclass != null) {
+        @if (todaysclass.detail != null || todaysclass.status == 'E') {
+          <button disabled class="btn btn-outline">
+            Marcar
+          </button>
+        } @else {
+          <button  (click)="sendAssistance()" class="btn btn-primary">
+            Marcar
+          </button>
+        }
+      }
+    </div>
+  </div>
+  <div style="height: 32px;"></div>
+  <div style="display: flex; justify-content: center; width: 100%;">
+    <div class="table-responsive">
+      @for (assistance of assistances; track $index) {
+        @if (assistance.id == studentid) {
+          <table class="table table-hover table-bordered text-center align-middle small" style="border-collapse: separate; border-spacing: 0px;">
+            <thead>
+              <tr>
+                <th colspan="2">{{assistance.rude + " | " + assistance.lname + " " + assistance.name}}</th>
+              </tr>
+              <tr>
+                <th>Fecha</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (date of dates; track $index) {
+                <tr>
+                  <td><b>{{formatdate(date, 'dd-MM', 'en-US')}}</b></td>
+                  <td><select disabled id="status" class="form-select" aria-label="Default select example">
+                    <option selected>{{getStatus(assistance.assistances, date) == 'present' ? 'Presente' : (getStatus(assistance.assistances, date) == 'missed' ? 'Falta' : (getStatus(assistance.assistances, date) == 'late' ? 'Tarde' : 'Licencia'))}}</option></select></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      }
+    </div>
+  </div>
+</div>

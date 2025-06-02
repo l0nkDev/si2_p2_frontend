@@ -1,10 +1,14 @@
-import { Student } from "./student";
-
 export interface Assistance {
+  id: number;
+  status: string;
+  date: Date;
+}
+
+export interface StudentAssistance {
 id: number;
-date: string;
-status: string;
-_class: number;
-student: Student;
-subject: number;
+name: string;
+lname: string;
+ci: number;
+rude: number;
+assistances: Assistance[];
 }
