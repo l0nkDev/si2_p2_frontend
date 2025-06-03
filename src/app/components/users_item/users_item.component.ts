@@ -47,6 +47,8 @@ export class UsersItemComponent {
       this.http.put(API_ENDPOINT + "admin/users/" + this.id + "/",
         {
           "id": this.id,
+          "login": this.login,
+          "password": this.password
         }
         ,{headers: this.headers})
       .subscribe(_ => {
