@@ -13,27 +13,43 @@
 
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Admin
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/admin/students">Estudiantes</a></li>
-            <li><a class="dropdown-item" routerLink="/admin/teachers">Docentes</a></li>
-            <li><a class="dropdown-item" routerLink="/admin/users">Usuarios</a></li>
-            <li><a class="dropdown-item" routerLink="/admin/subjects">Materias</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/teacher" data-bs-dismiss="offcanvas">Docente</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/student" data-bs-dismiss="offcanvas">Estudiante</a>
-        </li>
-
+          @if(islogged) {
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()" data-bs-dismiss="offcanvas">Cerrar sesión</a>
+            </li>
+          } @else {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/" data-bs-dismiss="offcanvas">Iniciar sesión</a>
+            </li>
+          }
+          @if (user != null) {
+            @if (user.role == 'A') {
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Admin
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" routerLink="/admin/students">Estudiantes</a></li>
+                  <li><a class="dropdown-item" routerLink="/admin/teachers">Docentes</a></li>
+                  <li><a class="dropdown-item" routerLink="/admin/users">Usuarios</a></li>
+                  <li><a class="dropdown-item" routerLink="/admin/subjects">Materias</a></li>
+                  <li><a class="dropdown-item" routerLink="/admin/logs">Bitácora</a></li>
+                  <li><a class="dropdown-item" routerLink="/admin/backups">Backups</a></li>
+                  <li><a class="dropdown-item" routerLink="/admin/reports">Reportes</a></li>
+                </ul>
+              </li>
+            }
+            @if(user.role == 'T') {
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/teacher" data-bs-dismiss="offcanvas">Docente</a>
+              </li>
+            }
+            @if (user.role == 'S') {
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/student" data-bs-dismiss="offcanvas">Estudiante</a>
+              </li>
+            }
+          }
         </ul>
       </div>
     </div>

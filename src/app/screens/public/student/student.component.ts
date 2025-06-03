@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClient, HttpXhrBackend} from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_ENDPOINT } from '../../../constants';
+import { StudentProfile } from '../../../interfaces/studentprofile';
 
 export interface Response {
   access_token: string
@@ -14,7 +15,12 @@ export interface Response {
   imports: [FormsModule],
 })
 export class StudentComponent {
-  constructor(private _router: Router) { }
+  profile: StudentProfile | null = null
+  id: number = 0
+
+  constructor(private _router: Router, private route: ActivatedRoute) {
+    this.route.params.subscribe( params =>  { this.id = params["id"]; this.fetchContent() });
+  }
 
   private http = new HttpClient(new HttpXhrBackend({
     build: () => new XMLHttpRequest()
@@ -22,19 +28,9 @@ export class StudentComponent {
   login = '';
   password = '';
 
-
-  runlogin() {
-    this.http.post<Response>(
-      API_ENDPOINT + "auth/login/",
-      {
-        "login": this.login,
-        "password": this.password
-      }
-    ).subscribe(response => {
-      sessionStorage.setItem('token', response.access_token);
-      console.log('router reached');
-      this._router.navigateByUrl('admin/students');
-    }
-  );
+  fetchContent() {
+    this.http.get<StudentProfile>(
+      API_ENDPOINT + "students/" + this.id +"/",
+    ).subscribe(response => { this.profile = response; console.log(this.profile) } );
   }
 }

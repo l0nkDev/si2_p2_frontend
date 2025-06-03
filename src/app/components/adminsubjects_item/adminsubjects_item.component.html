@@ -1,0 +1,44 @@
+@if (subjectarea != null) {
+    @if (toggled) {
+    @if (subjectarea.subjects.length == 0) {
+        <tr>
+          <td (click)="toggleExpanded()"> △ {{subjectarea.title}}</td>
+          <td colspan="3"><button [routerLink]="'/admin/subjectareas/' + subjectarea.id + '/subjects/create'" class="btn btn-outline-success btn-sm" style="width: 100%;">➕ Materia</button></td>
+        </tr>
+    }
+    @for (subject of subjectarea.subjects; track $index) {
+      @if (subject.classes.length == 0) {
+        <tr> @if (subjectarea.subjects.indexOf(subject) == 0) {
+          <td [attr.rowSpan]="calculateAreaHeight(subjectarea)" (click)="toggleExpanded()"> △ {{subjectarea.title}}</td> }
+          <td>{{subject.title}}</td>
+          <td>{{subject.teacher.lname + " " + subject.teacher.name}}</td>
+          <td><button [routerLink]="'/admin/subjects/' + subject.id + '/assign'" class="btn btn-outline-success btn-sm" style="width: 100%;">➕ Curso</button></td>
+        </tr>
+      }
+      @for (class of subject.classes; track $index) {
+        <tr> @if (subject.classes.indexOf(class) == 0 && subjectarea.subjects.indexOf(subject) == 0) {
+          <td [attr.rowSpan]="calculateAreaHeight(subjectarea)" (click)="toggleExpanded()"> △ {{subjectarea.title}}</td> }
+          @if (subject.classes.indexOf(class) == 0) {
+          <td [attr.rowSpan]="calculateSubjectHeight(subject)">{{subject.title}}</td>
+          <td [attr.rowSpan]="calculateSubjectHeight(subject)">{{subject.teacher.lname + " " + subject.teacher.name}}</td> }
+          <td>{{class.stage + class.grade + class.parallel}}</td>
+        </tr>
+        @if (subject.classes.indexOf(class) == (subject.classes.length-1)) {
+        <tr>
+          <td><button [routerLink]="'/admin/subjects/' + subject.id + '/assign'" class="btn btn-outline-success btn-sm" style="width: 100%;">➕ Curso</button></td>
+        </tr>
+        }
+      }
+      @if (subjectarea.subjects.indexOf(subject) == (subjectarea.subjects.length-1)) {
+        <tr>
+          <td colspan="3"><button [routerLink]="'/admin/subjectareas/' + subjectarea?.id + '/subjects/create'" class="btn btn-outline-success btn-sm" style="width: 100%;">➕ Materia</button></td>
+        </tr>
+      }
+    }
+  } @else {
+        <tr>
+          <td (click)="toggleExpanded()"> ▽ {{subjectarea.title}}</td>
+          <td colspan="3"></td>
+        </tr>
+  }
+}

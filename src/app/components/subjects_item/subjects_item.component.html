@@ -1,16 +1,14 @@
+@if (subject != null) {
   <div class="card p-4 shadow" style="width: 100%; max-width: 600px; background-color: #ffffff; border-radius: 12px;">
     <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
+      <h5 class="card-title" (click)="toggleExpanded()">{{toggled ? "▽" : "△" }} {{subject.title}} | 🏫: {{subject.classes.length}} | 🧑‍🎓 {{countStudents()}} | 📊: ~{{getAverage() | number:'1.0-2'}}</h5>
     </div>
     <ul class="list-group list-group-flush">
-      @for (class of classes; track $index) {
-        <li class="list-group-item" style="display: flex; justify-content: space-between;">{{class.stage + class.grade + class.parallel}}
-          <div class="btn-group">
-            <a routerLink="{{ '/teacher/subjects/' + this.id + '/classes/' + class.id + '/assistance' }}" class="btn btn-primary">Asistencia</a>
-            <a routerLink="{{ '/teacher/subjects/' + this.id + '/classes/' + class.id + '/grades' }}" class="btn btn-primary">Notas</a>
-            <a routerLink="{{ '/teacher/subjects/' + this.id + '/classes/' + class.id + '/participation' }}" class="btn btn-primary">Participaciones</a>
-          </div>
-        </li>
+    @if (toggled) {
+      @for (class of subject.classes; track $index) {
+        <student_entry [class]="class" [subject]="subject"></student_entry>
       }
+    }
     </ul>
   </div>
+}

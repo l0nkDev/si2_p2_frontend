@@ -16,12 +16,10 @@
                 <button (click)="deleteTarget(entry.id)" class="btn btn-outline-danger btn-sm">🗑️</button>
               </div>
             </th>
-            @if (sem1t.indexOf(entry) == sem1t.length-1) {
-            <th>
-              <button (click)="createTarget(1)" class="btn btn-outline-danger btn-sm">➕</button>
-            </th>
-            }
           }
+          <th>
+            <button (click)="createTarget(1)" class="btn btn-outline-danger btn-sm">➕</button>
+          </th>
           <th><b>1er Trimestre</b></th>
           @for (entry of sem2t; track $index) {
             <th>

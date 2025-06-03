@@ -1,0 +1,18 @@
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <div style="height: 32px;"> </div>
+  <h4 class="text-center text-primary mb-3">Backups</h4>
+  <div style="height: 32px;"> </div>
+  <button (click)="makeBackup()" class="btn btn-primary">Crear backup</button>
+  <div style="height: 32px;"> </div>
+  @for (prod of backups; track $index) {
+    <div class="card" style="width: 25rem;">
+      <div class="card-header">
+        <a>{{prod.name}}<br>{{prod.date}} - {{prod.time}}</a><br>
+      </div>
+      <div class="card-body">
+        <button (click)="restoreBackup(prod.name)" class="btn btn-primary">Restaurar</button>
+      </div>
+    </div>
+  <div style="height: 32px;"> </div>
+  }
+</div>

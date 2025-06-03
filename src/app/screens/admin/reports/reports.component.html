@@ -1,0 +1,62 @@
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <div style="height: 32px;"> </div>
+  <h4 class="text-center text-primary mb-3">Reportes</h4>
+  <div style="height: 32px;"> </div>
+  <div style="display: flex; flex-direction: row; justify-content: center; gap: 8px; width: 60%;">
+    <div style="display: flex; flex-direction: column; flex-grow: 1x;">
+      <label class="form-label mb-1">Tipo</label>
+      <select [(ngModel)]="type" class="form-control form-control-sm" style="min-width: 60px;">
+        <option selected value="logs">Bitácora</option>
+        <option value="teachers">Docentes</option>
+        <option value="students">Estudiantes</option>
+      </select>
+    </div>
+    @if (type == 'logs') {
+    <div style="display: flex; flex-direction: column; flex-grow: 1;">
+      <label class="form-label mb-1">Roles</label>
+      <select [(ngModel)]="role" class="form-control form-control-sm" style="min-width: 60px;">
+        <option selected value="any">Todos</option>
+        <option selected value="A">Admin</option>
+        <option selected value="S">Estudiante</option>
+        <option selected value="T">Docente</option>
+      </select>
+    </div>
+    <div style="display: flex; flex-direction: column; flex-grow: 1;">
+      <label class="form-label mb-1">Desde:</label>
+      <div style="display: flex; flex-direction: row; gap: 8px;">
+        <input [(ngModel)]="s" class="form-check-input" type="checkbox" value="" id="checkChecked">
+        <input [(ngModel)]="since"[disabled]="!s" type="date" class="form-control form-control-sm" style="min-width: 60px;">
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; flex-grow: 1;">
+      <label class="form-label mb-1">Hasta:</label>
+      <div style="display: flex; flex-direction: row; gap: 8px;">
+        <input [(ngModel)]="u" class="form-check-input" type="checkbox" value="" id="checkChecked">
+        <input [(ngModel)]="until" [disabled]="!u" type="date" class="form-control form-control-sm" style="min-width: 60px;">
+      </div>
+    </div>
+    <button (click)="createLog()" class="btn btn-primary">Crear</button>
+    }
+    @if (type == 'students') {
+    <button (click)="createStudents()" class="btn btn-primary">Crear</button>
+    }
+    @if (type == 'teachers') {
+    <button (click)="createTeachers()" class="btn btn-primary">Crear</button>
+    }
+  </div>
+  <div style="height: 32px;"> </div>
+  @for (prod of reports; track $index) {
+    <div class="card" style="width: 25rem;">
+      <div class="card-header">
+        <a>{{prod.title}}<br>{{date(prod.time)}}</a><br>
+      </div>
+      <div class="card-body" style="display: flex; flex-direction: row; justify-content: center; gap: 8px;">
+        <a [href]="api + 'admin/reports/?' + prod.params + '&f=pdf'" ><button class="btn btn-outline-primary">PDF</button></a>
+        <a [href]="api + 'admin/reports/?' + prod.params + '&f=excel'" ><button class="btn btn-outline-primary">Excel</button></a>
+        <a [href]="api + 'admin/reports/?' + prod.params + '&f=html'" ><button class="btn btn-outline-primary">HTML</button></a>
+        <a [href]="api + 'admin/reports/?' + prod.params + '&f=csv'" ><button class="btn btn-outline-primary">CSV</button></a>
+      </div>
+    </div>
+  <div style="height: 32px;"> </div>
+  }
+</div>

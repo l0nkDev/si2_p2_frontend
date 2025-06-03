@@ -1,0 +1,12 @@
+@if (bitacora != null) {
+  <div class="card" style="width: 25rem;">
+    <div class="card-header">
+      <a>{{bitacora.user}} - {{bitacora.login}}<br>{{bitacora.role}} - {{bitacora.ip}}</a><br>
+      <a>{{date(bitacora.time)}}</a>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{bitacora.action}}</p>
+    </div>
+  </div>
+}
+

@@ -1,0 +1,15 @@
+@if (class != null && subject != null) {
+  <li class="list-group-item" style="display: flex; justify-content: space-between;"><b (click)="toggleExpanded()"> {{expanded ? "▽" : "△" }} {{class.stage + class.grade + class.parallel}}</b>
+    <b> | 🧑‍🎓: {{class.students.length}} | 📊: ~{{getAverage() | number:'1.0-2'}}</b>
+    <div class="btn-group">
+      <a routerLink="{{ '/teacher/subjects/' + subject.id + '/classes/' + class.id + '/assistance' }}" class="btn btn-primary">Asistencia</a>
+      <a routerLink="{{ '/teacher/subjects/' + subject.id + '/classes/' + class.id + '/grades' }}" class="btn btn-primary">Notas</a>
+      <a routerLink="{{ '/teacher/subjects/' + subject.id + '/classes/' + class.id + '/participation' }}" class="btn btn-primary">Participaciones</a>
+    </div>
+  </li>
+  @if(expanded) {
+    @for (student of class.students; track $index) {
+    <li routerLink="{{ '/teacher/students/' + student.id + '/'}}" class="list-group-item" style="display: flex; justify-content: space-between;">{{student.lname + " " + student.name}} <b>Promedio: {{student.scores.average}} | Predicción: {{student.scores.prediction}}</b></li>
+    }
+  }
+}

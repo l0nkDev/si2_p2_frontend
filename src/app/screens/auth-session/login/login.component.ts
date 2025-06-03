@@ -6,6 +6,7 @@ import { API_ENDPOINT } from '../../../constants';
 
 export interface Response {
   access_token: string
+  role: string
 }
 
 @Component({
@@ -33,7 +34,9 @@ export class LoginComponent {
     ).subscribe(response => {
       sessionStorage.setItem('token', response.access_token);
       console.log('router reached');
-      this._router.navigateByUrl('admin/students');
+      if (response.role == 'A') { this._router.navigate(['/admin', 'logs']); }
+      if (response.role == 'S') { this._router.navigate(['/student']); }
+      if (response.role == 'T') { this._router.navigate(['/teacher']); }
     }
   );
   }

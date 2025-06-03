@@ -18,29 +18,27 @@
   <div style="height: 32px;"></div>
   <div style="display: flex; justify-content: center; width: 100%;">
     <div class="table-responsive">
-      @for (assistance of assistances; track $index) {
-        @if (assistance.id == studentid) {
-          <table class="table table-hover table-bordered text-center align-middle small" style="border-collapse: separate; border-spacing: 0px;">
-            <thead>
-              <tr>
-                <th colspan="2">{{assistance.rude + " | " + assistance.lname + " " + assistance.name}}</th>
-              </tr>
-              <tr>
-                <th>Fecha</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (date of dates; track $index) {
-                <tr>
-                  <td><b>{{formatdate(date, 'dd-MM', 'en-US')}}</b></td>
-                  <td><select disabled id="status" class="form-select" aria-label="Default select example">
-                    <option selected>{{getStatus(assistance.assistances, date) == 'present' ? 'Presente' : (getStatus(assistance.assistances, date) == 'missed' ? 'Falta' : (getStatus(assistance.assistances, date) == 'late' ? 'Tarde' : 'Licencia'))}}</option></select></td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        }
+      @if (assistance != null) {
+      <table class="table table-hover table-bordered text-center align-middle small" style="border-collapse: separate; border-spacing: 0px;">
+        <thead>
+          <tr>
+            <th colspan="2">{{assistance.rude + " | " + assistance.lname + " " + assistance.name}}</th>
+          </tr>
+          <tr>
+            <th>Fecha</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (date of dates; track $index) {
+            <tr>
+              <td><b>{{formatdate(date, 'dd-MM', 'en-US')}}</b></td>
+              <td><select disabled id="status" class="form-select" aria-label="Default select example">
+                <option selected>{{getStatus(assistance.assistances, date) == 'present' ? 'Presente' : (getStatus(assistance.assistances, date) == 'missed' ? 'Falta' : (getStatus(assistance.assistances, date) == 'late' ? 'Tarde' : 'Licencia'))}}</option></select></td>
+            </tr>
+          }
+        </tbody>
+      </table>
       }
     </div>
   </div>

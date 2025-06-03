@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders, HttpXhrBackend } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { API_ENDPOINT } from '../../../constants';
 import { Subject, SubjectArea } from '../../../interfaces/subjectarea';
+import { AdminSubjectsItem } from '../../../components/adminsubjects_item/adminsubjects_item.component';
 
 @Component({
   selector: 'subjects',
   templateUrl: './subjects.component.html',
-  imports: [RouterLink],
+  imports: [AdminSubjectsItem],
 })
 
 export class SubjectAreasComponent implements OnInit{

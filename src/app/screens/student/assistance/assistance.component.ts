@@ -24,7 +24,7 @@ todaysclass: ClassSession | null = null;
     this.route.params.subscribe( params =>  { this.id = params["id"]; this.class = params["class"]; this.fetchContent() });
   }
 
-  assistances: StudentAssistance[] = [];
+  assistance: StudentAssistance | null = null;
   dates: Date[] = [];
 
   headers = new HttpHeaders;
@@ -36,8 +36,8 @@ todaysclass: ClassSession | null = null;
 
   fetchContent() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    this.http.get<StudentAssistance[]>(API_ENDPOINT + "student/subjects/"+this.id+"/"+this.class+"/"+"assistance/", {headers: this.headers})
-    .subscribe(response => { this.assistances = response; })
+    this.http.get<StudentAssistance>(API_ENDPOINT + "student/subjects/"+this.id+"/"+this.class+"/"+"assistance/", {headers: this.headers})
+    .subscribe(response => { this.assistance = response; })
 
     this.http.get<ClassSession[]>(API_ENDPOINT + "student/subjects/"+this.id+"/"+this.class+"/"+"assistance/sessions", {headers: this.headers})
     .subscribe(response => {

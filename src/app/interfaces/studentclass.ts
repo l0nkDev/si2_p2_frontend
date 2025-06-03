@@ -1,6 +1,14 @@
 export interface SubjectSimple {
   id: number;
   title: string;
+  scores: Prediction;
+}
+
+export interface Prediction {
+  average: number;
+  prediction: number;
+  A: number;
+  B: number;
 }
 
 export interface StudentClass {

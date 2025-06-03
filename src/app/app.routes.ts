@@ -20,6 +20,9 @@ import { CreateParticipationComponent } from './screens/teacher/participation/cr
 import { EditParticipationComponent } from './screens/teacher/participation/edit/edit.component';
 import { StudentParticipationComponent } from './screens/student/participation/participation.component';
 import { StudentGradesComponent } from './screens/student/grades/grades.component';
+import { BitacoraComponent } from './screens/admin/bitacora/bitacora.component';
+import { BackupsComponent } from './screens/admin/backups/backups.component';
+import { ReportsComponent } from './screens/admin/reports/reports.component';
 
 export const routes: Routes = [
   {
@@ -83,8 +86,18 @@ export const routes: Routes = [
     component: SubjectsComponent
   },
   {
-    path: 'student/:id',
-    title: 'Estudiante',
+    path: 'teacher/students/:id',
+    title: 'Perfil de estudiante',
+    component: StudentComponent
+  },
+  {
+    path: 'students/:id',
+    title: 'Perfil de estudiante',
+    component: StudentComponent
+  },
+  {
+    path: 'admin/students/:id',
+    title: 'Perfil de estudiante',
     component: StudentComponent
   },
   {
@@ -121,6 +134,21 @@ export const routes: Routes = [
     path: 'admin/subjects',
     title: 'Materias',
     component: SubjectAreasComponent
+  },
+  {
+    path: 'admin/logs',
+    title: 'Bitácora',
+    component: BitacoraComponent
+  },
+  {
+    path: 'admin/backups',
+    title: 'Backups',
+    component: BackupsComponent
+  },
+  {
+    path: 'admin/reports',
+    title: 'Reportes',
+    component: ReportsComponent
   },
   {
     path: 'admin/subjects/:id/assign',

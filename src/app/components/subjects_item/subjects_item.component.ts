@@ -1,32 +1,48 @@
 import { Component, Input, Output, numberAttribute, EventEmitter, OnInit } from '@angular/core';
 import { HttpClient, HttpXhrBackend, HttpHeaders } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import { API_ENDPOINT } from '../../constants';
-import { ClassSimple } from '../../interfaces/classsimple';
 import { RouterLink } from '@angular/router';
+import { DashboardSubject } from '../../interfaces/dashboardsubject';
+import { StudentEntryComponent } from './student_entry/student_entry.component';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'subjects_item',
   templateUrl: './subjects_item.component.html',
-  imports: [FormsModule, RouterLink]
+  imports: [FormsModule, StudentEntryComponent, DecimalPipe]
 })
 export class SubjectsItemComponent implements OnInit{
-  isEditable = 'disabled';
-  buttonStatus = 'disabled'
-  token: string | null = '';
-  headers = new HttpHeaders();
-  @Input({transform: numberAttribute}) id: number = 0;
-  @Input({transform: numberAttribute}) teacher: number = 0;
-  @Input() title: string = '';
-  @Input() classes: ClassSimple[] = [];
-  @Output() entryDeletedEvent = new EventEmitter<string>()
-
-  private http = new HttpClient(new HttpXhrBackend({
-    build: () => new XMLHttpRequest()
-  }));
+  toggled = false;
+  @Input() subject: DashboardSubject | null = null;
 
   ngOnInit() {
-    this.classes.sort((a,b) => (a.stage+a.grade+a.parallel).localeCompare(b.stage+b.grade+b.parallel))
+    this.subject?.classes.sort((a,b) => (a.stage+a.grade+a.parallel).localeCompare(b.stage+b.grade+b.parallel))
+  }
+
+  toggleExpanded() {
+    this.toggled = !this.toggled
+  }
+
+  countStudents() {
+    var sum = 0;
+    if (this.subject == null) return 0
+    for (var cl of this.subject?.classes) {
+      sum += cl.students.length
+    }
+    return sum;
+  }
+
+  getAverage() {
+    var sum = 0;
+    var num = 0;
+    if (this.subject == null) return 0
+    for (var cl of this.subject.classes) {
+      for (var st of cl.students) {
+        sum += st.scores.average
+        num += 1
+      }
+    }
+    return num == 0 ? 0 : (sum/num);
   }
 
 }
