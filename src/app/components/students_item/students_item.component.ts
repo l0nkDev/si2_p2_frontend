@@ -2,11 +2,13 @@ import { Component, Input, Output, numberAttribute, EventEmitter } from '@angula
 import { HttpClient, HttpXhrBackend, HttpHeaders } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { API_ENDPOINT } from '../../constants';
+import { RouterLink } from '@angular/router';
+import { ClassSimple } from '../../interfaces/classsimple';
 
 @Component({
   selector: 'students_item',
   templateUrl: './students_item.component.html',
-  imports: [FormsModule]
+  imports: [FormsModule, RouterLink]
 })
 export class StudentsItemComponent {
   isEditable = 'disabled';
@@ -20,6 +22,8 @@ export class StudentsItemComponent {
   @Input({transform: numberAttribute}) phone: number = 0;
   @Input() email: string = '';
   @Input({transform: numberAttribute}) rude: number = 0;
+  @Input() classes: ClassSimple[] = [];
+  @Input() selectedclass: number = 0;
   @Output() entryDeletedEvent = new EventEmitter<string>()
 
   private http = new HttpClient(new HttpXhrBackend({
@@ -57,5 +61,17 @@ export class StudentsItemComponent {
         console.log("emitido")
       });
     }
+  }
+
+  assignClass() {
+      console.log('logrado');
+      this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+      this.http.post(API_ENDPOINT + "admin/students/" + this.id + "/assign/",
+        {
+          "student": this.id,
+          "class": this.selectedclass
+        }
+        ,{headers: this.headers})
+      .subscribe(_ => {});
   }
 }

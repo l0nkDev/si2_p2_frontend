@@ -17,6 +17,7 @@ export class UsersItemComponent {
   @Input() login: string = '';
   @Input() password: string = '';
   @Input() role: string = '';
+  roleD: string = '';
   @Output() entryDeletedEvent = new EventEmitter<string>()
 
   private http = new HttpClient(new HttpXhrBackend({
@@ -24,10 +25,10 @@ export class UsersItemComponent {
   }));
 
   ngOnInit() {
-    if (this.role == 'A') this.role = 'Admin';
-    if (this.role == 'T') this.role = 'Docente';
-    if (this.role == 'S') this.role = 'Estudiante';
-    if (this.role == 'O') this.role = 'Dueño';
+    if (this.role == 'A') this.roleD = 'Admin';
+    if (this.role == 'T') this.roleD = 'Docente';
+    if (this.role == 'S') this.roleD = 'Estudiante';
+    if (this.role == 'O') this.roleD = 'Dueño';
   }
 
   OnEntryButtonClick() {
@@ -48,7 +49,8 @@ export class UsersItemComponent {
         {
           "id": this.id,
           "login": this.login,
-          "password": this.password
+          "password": this.password,
+          "role": this.password
         }
         ,{headers: this.headers})
       .subscribe(_ => {

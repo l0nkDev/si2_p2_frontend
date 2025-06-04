@@ -13,34 +13,29 @@ export interface Response {
   templateUrl: './create.component.html',
   imports: [FormsModule],
 })
-export class CreateTeacherComponent {
+export class CreateUserComponent {
   constructor(private _router: Router) { }
 
   private http = new HttpClient(new HttpXhrBackend({
     build: () => new XMLHttpRequest()
   }));
-  name = '';
-  lname = '';
-  ci = 0;
-  phone = 0;
-  email = '';
+  login = '';
+  password = '';
   headers = new HttpHeaders();
 
 
   runcreate() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     this.http.post<Response>(
-      API_ENDPOINT + "admin/teachers/",
+      API_ENDPOINT + "admin/users/",
       {
-        "name": this.name,
-        "lname": this.lname,
-        "ci": this.ci,
-        "phone": this.phone,
-        "email": this.email,
+        "login": this.login,
+        "password": this.password,
+        "role": 'A'
       }
       ,{headers: this.headers})
     .subscribe(response => {
-      this._router.navigateByUrl('admin/teachers');
+      this._router.navigateByUrl('admin/users');
     }
   );
   }

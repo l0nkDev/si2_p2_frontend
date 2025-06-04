@@ -23,6 +23,7 @@ import { StudentGradesComponent } from './screens/student/grades/grades.componen
 import { BitacoraComponent } from './screens/admin/bitacora/bitacora.component';
 import { BackupsComponent } from './screens/admin/backups/backups.component';
 import { ReportsComponent } from './screens/admin/reports/reports.component';
+import { CreateUserComponent } from './screens/admin/users/create/create.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,11 @@ export const routes: Routes = [
     path: 'admin/students/create',
     title: 'Estudiantes',
     component: CreateStudentComponent
+  },
+  {
+    path: 'admin/users/create',
+    title: 'Usuarios',
+    component: CreateUserComponent
   },
   {
     path: 'admin/students',

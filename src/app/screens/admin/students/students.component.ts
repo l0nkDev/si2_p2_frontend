@@ -4,6 +4,7 @@ import { StudentsItemComponent } from '../../../components/students_item/student
 import { Student } from '../../../interfaces/student';
 import { Router } from '@angular/router';
 import { API_ENDPOINT } from '../../../constants';
+import { ClassSimple } from '../../../interfaces/classsimple';
 
 @Component({
   selector: 'students',
@@ -14,6 +15,7 @@ import { API_ENDPOINT } from '../../../constants';
 export class StudentsComponent implements OnInit{
   constructor(private _router: Router) { }
   students: Student[] = [];
+  classes: ClassSimple[] = [];
   headers = new HttpHeaders;
   private http = new HttpClient(new HttpXhrBackend({
     build: () => new XMLHttpRequest()
@@ -26,6 +28,10 @@ export class StudentsComponent implements OnInit{
     this.http.get<Student[]>(API_ENDPOINT + "admin/students/", {headers: this.headers})
     .subscribe(response => {
       this.students = response;
+    })
+    this.http.get<ClassSimple[]>(API_ENDPOINT + "admin/classes/", {headers: this.headers})
+    .subscribe(response => {
+      this.classes = response;
     })
   }
 
