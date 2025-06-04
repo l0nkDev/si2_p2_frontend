@@ -9,6 +9,7 @@
         <option selected value="logs">Bitácora</option>
         <option value="teachers">Docentes</option>
         <option value="students">Estudiantes</option>
+        <option value="users">Usuarios</option>
       </select>
     </div>
     @if (type == 'logs') {
@@ -42,6 +43,9 @@
     }
     @if (type == 'teachers') {
     <button (click)="createTeachers()" class="btn btn-primary">Crear</button>
+    }
+    @if (type == 'users') {
+    <button (click)="createUsers()" class="btn btn-primary">Crear</button>
     }
   </div>
   <div style="height: 32px;"> </div>

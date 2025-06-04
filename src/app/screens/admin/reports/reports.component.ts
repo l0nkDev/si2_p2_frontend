@@ -78,6 +78,17 @@ export class ReportsComponent implements OnInit{
     .subscribe(_ => { this.fetchContent() })
   }
 
+  createUsers() {
+    this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    this.http.post<Report[]>(API_ENDPOINT + "admin/reports/new/",
+      {
+        "params": "type=users",
+        "title": "USUARIOS"
+      }
+      , {headers: this.headers})
+    .subscribe(_ => { this.fetchContent() })
+  }
+
 }
 
 
