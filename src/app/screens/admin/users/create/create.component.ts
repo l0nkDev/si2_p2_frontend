@@ -27,11 +27,10 @@ export class CreateUserComponent {
   runcreate() {
     this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     this.http.post<Response>(
-      API_ENDPOINT + "admin/users/",
+      API_ENDPOINT + "admin/users/new/",
       {
         "login": this.login,
-        "password": this.password,
-        "role": 'A'
+        "password": this.password
       }
       ,{headers: this.headers})
     .subscribe(response => {
